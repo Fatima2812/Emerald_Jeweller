@@ -1,0 +1,28 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<section class="py-lg-4 py-md-3 py-sm-3 py-3 bg-dark">
+    <div class="container pt-lg-5 pt-md-5 pt-sm-4 pt-4">
+       <div class="state-us mb-lg-5 mb-md-4 mb-3">
+        <h1 style="color: white; font-style: italic; font-family: French Script MT; " class="text-center text-light mb-3">Contact Us</h1>
+        <form method="post">
+        {% csrf_token %}
+       <div class=" agile-wls-contact-mid">
+          <div class="form-group contact-forms">
+             <input type="text" class="form-control" placeholder="Name" name="name" required="" >
+          </div>
+          <div class="form-group contact-forms">
+             <input type="email" class="form-control" placeholder="Email" name="email"  required="">
+          </div>
+          <div class="form-group contact-forms">
+             <input type="text" class="form-control" placeholder="Phone" name="phone" required="">
+          </div>
+          <div class="form-group contact-forms">
+             <textarea class="form-control" rows="3" placeholder="Message" name="message" required=""></textarea>
+          </div>
+          <input type="submit" style="font-weight: bold; font-style: italic; font-family: sans-serif;" class="btn btn-outline-light float-left" value="Submit">
+       </div>
+    </form>
+    </div>
+    </div>
+</section>
+{% endblock content %}

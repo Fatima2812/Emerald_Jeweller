@@ -1,0 +1,38 @@
+{% extends "main/layout2.html" %}
+{% block content %}
+<div class="cart text-light">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="text-center">Customer Details</h3>
+            {% if items %}
+            <div class="table-responsive">
+                <table class="table bg-transparent text-light">
+                    <thead>
+                    <tr>
+                        <td scope="col">ID</td>
+                        <th scope="col">Username</th>
+                        <th scope="col">Phone no.</th>
+                        <th scope="col">Address</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.Name }}</td>
+                        <td>{{ item.PhoneNo3 }}</td>
+                        <td>{{ item.Address }}</td>
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <h4 class="text-center">No Details</h4>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

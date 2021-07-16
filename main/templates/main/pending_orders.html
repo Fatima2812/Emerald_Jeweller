@@ -1,0 +1,53 @@
+{% extends "main/layout2.html" %}
+{% block content %}
+<div class="cart text-light">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="text-center">Active Orders</h3>
+                {% if items %}
+                <div class="table-responsive">
+                    <table class="table bg-transparent text-light">
+                        <thead>
+                        <tr>
+                            <td scope="col">Order No.</td>
+                            <th scope="col">User</th>
+                            <th scope="col">User Email</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Change Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.user.username }}</td>
+                            <td>{{ item.user.email}}</td>
+                            <td>{{ item.item.title }} <span class="badge badge-pill badge-light">{{ item.item.labels }}</span></td>
+                            <td>{{ item.item.Discount }}</td>
+                            <td>{{ item.item.price }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'main:update_status' item.id %}" style="display: flex;">
+                                    {% csrf_token %}
+                                    <select class="form-control" name="status">
+                                        <option value="Active" selected="selected">Active</option>
+                                        <option value="Delivered">Delivered</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-outline-light">Change</button>
+                                </form>
+                            </td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center">The item is delivered</h4>
+                {% endif %}
+            </div>
+        </div>
+</div>
+{% endblock content %}

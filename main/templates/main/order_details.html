@@ -1,0 +1,152 @@
+{% load get_group %}
+{% load static %}
+<!DOCTYPE html>
+<html class="p-3 mb-2 bg-dark text-white" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
+    <title>Jewellery Shop</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+        <a style="color: white; font-style: italic; font-family: French Script MT; " class="navbar-brand" href="/"><h1>Emerald Jeweller &nbsp</h1></a>
+        <a style="color: white; font-style: italic; font-size: larger;  font-family: French Script MT; " class="mr-2 text-light"><h2>User Name: {{request.user}} </h2> </a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                    <li><a style="color: white; font-style: italic; font-family: sans-serif; " href="{% url 'main:home' %}" class="mr-2 text-light">Home &nbsp</a></li>
+                {% if user.is_authenticated %}
+                    {% if request.user|has_group:"admin_owner" %} 
+                        <li><a style="color: white; font-style: italic; font-family: sans-serif; " href="{% url 'main:admin_dashboard' %}" class="mr-2 text-light">DashBoard &nbsp</a></li>
+                        <li><a style="color: white; font-style: italic; font-family: sans-serif; " title="Print Screen" alt="Print Screen" onclick="window.print();" target="_blank"  class="mr-2 text-light">Print &nbsp</a></li>
+                        <li>
+                            <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button  type="submit" style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="btn btn-sm btn-outline-light mr-2">Logout &nbsp</button>
+                            </form>
+                        </li> 
+                    {% else %}
+                        <li><a style="color: white; font-style: italic; font-family: sans-serif; " href="{% url 'main:cart' %}" class="mr-2 text-light">My Cart &nbsp</a></li>
+                        <li><a style="color: white; font-style: italic; font-family: sans-serif; " href="{% url 'main:order_details' %}" class="mr-2 text-light">My Orders &nbsp</a></li>
+                        <li><a style="color: white; font-style: italic; font-family: sans-serif; " title="Print Screen" alt="Print Screen" onclick="window.print();" target="_blank"  class="mr-2 text-light">Print &nbsp</a></li>
+                        <li>
+                            <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="btn btn-sm btn-outline-light mr-2">Logout &nbsp</button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li><a style="color: white; font-style: italic; font-family: sans-serif; " href="{% url 'accounts:login' %}" class="mr-2 text-light">Login &nbsp</a></li>
+                    <li><a style="color: white; font-style: italic; font-family: sans-serif; " href="{% url 'accounts:signup' %}" class="mr-2 text-light">SignUp &nbsp</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <main role="main">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $('.carousel').carousel();
+    </script>
+<div class="cart bg-dark text-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mt-5">
+                
+                <h1 class="text-center" style=" font-style: italic; font-family: French Script MT;">Active Orders</h1>
+                {% if items %}
+                <h2 class="text-center" style=" font-style: italic; font-family: French Script MT;">Total Bill Amount: Rs. {{total}} for {{ count }} items.</h2>
+                <h6 class="text-center" style=" font-style: italic; font-family: sans-serif;">Please pay at the time of delivery!</h6>
+                
+                <div class="table-responsive">
+                    <table class="table table-light bg-dark" style=" font-style: italic; font-family: sans-serif;">
+                        <thead>
+                        <tr>
+                            <th scope="col">Ordered</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Order Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item_active in items %}
+                        <tr>
+                            <td>{{ item_active.ordered_date }}</td>
+                            <td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
+                            <td>{{ item_active.item.Discount }}</td>
+                            <td>{{ item_active.item.price }}</td>
+                            <td>{{ item_active.status }}</td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center" style=" font-style: italic; font-family: sans-serif;">Sorry, you have not ordered any item yet!!!</h4>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">      
+            <div class="col-sm-12 mt-5">
+                <h1 class="text-center" style=" font-style: italic; font-family: French Script MT;">Past Orders</h1>
+                {% if cart_items %}
+                <div class="table-responsive">
+                    <table class="table table-light bg-dark" style=" font-style: italic; font-family: sans-serif;">
+                        <thead>
+                        <tr>
+                            <th scope="col">Ordered</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Delivery Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart in cart_items %}
+                        <tr>
+                            <td>{{ cart.ordered_date }}</td>
+                            <td>{{ cart.item.title }} <span class="badge badge-{{ cart.item.label_colour }}">{{ cart.item.labels }}</span></td>
+                            <td>{{ cart.item.Discount }}</td>
+                            <td>{{ cart.item.price }}</td>
+                            <td>{{ cart.status }}</td>
+                            <td>{{ cart.delivery_date }}</td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center" style=" font-style: italic; font-family: sans-serif;">Sorry, you have not ordered any item yet!!!</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

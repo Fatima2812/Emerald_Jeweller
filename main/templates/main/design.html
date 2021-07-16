@@ -1,0 +1,60 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<div class="dishes">
+    <!--Main layout-->
+  <main class="mt-3 pt-4 main p-3 mb-2 bg-dark text-white">
+    <div class="container dark-grey-text">
+      <div class="row wow fadeIn">
+        <div class="col-md-6 mb-4">
+          <img src="{{ item.image.url }}" class="img-fluid mt-4" alt="">
+        </div>
+        <div class="col-md-6 mb-4 information">
+          <!--Content-->
+          <div class="p-4 content">
+            <div class="mt-0">
+                <h1 style=" color: white; font-style: italic; font-family: French Script MT; "><u>{{ item.title }}</u> </h1><h4><span class="badge badge-pill badge-light ml-2">{{ item.labels }}</span></h4>
+            </div>
+            <div class="lead">
+              {% if item.Discount %}
+              <h5 style="color: white; font-style: italic; font-family: sans-serif; ">{{ item.Discount }}</h5>
+              {% endif %}
+              <h3 style="color: white; font-style: italic; font-family: sans-serif; ">Rs. {{ item.price }}</h3>
+            </div>
+            <a href="{% url 'main:add-to-cart' item.slug %}" style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="btn btn-outline-light btn-md my-0 p">Add to cart</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </main>
+  <div class="p-3 mb-2 bg-dark text-white">
+    <h1 style="color: white; font-style: italic; font-family: French Script MT; " class="text-center">Reviews</h1>
+    
+    <form action="{% url 'main:add_reviews' %}" method="POST" class="mb-3 p-3 mb-2 bg-dark text-white">
+      {% csrf_token %}
+      <div class="row p-3 mb-2 bg-dark text-white">
+        <div class="col-sm-11 ">
+          <input style="font-style: italic; font-family: sans-serif; " type="text" name="review" class="form-control" placeholder="Enter Your Review">
+          <input type="hidden" name="rslug" class="form-control" value="{{item.slug}}">
+        </div>
+        <div class="col-sm-1">
+          <button type="submit" style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="btn btn-outline-light">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    {% for review in reviews %}
+    <div class="main-reviews card p-3 mb-2 bg-dark text-white mb-3">
+      <div class="card-body">
+        <div class="user_details p-3 mb-2 bg-dark text-white" style="display: flex; border-bottom: 1px solid rgb(255, 255, 255);">
+          <h1 class="mr-3" style="font-style: italic; font-family: French Script MT;">{{ review.user.username }} </h1>
+          <p class="mt-2" style="font-style: italic; font-family: sans-serif;">{{ review.posted_on }}</p>
+        </div>
+          <h4 class="p-3 mb-2 bg-dark text-white" style="font-style: italic; font-family: sans-serif;">{{ review.review }}</h4>
+      </div>
+    </div>
+    {% endfor %}
+    
+  </div>
+</div>
+{% endblock content %}

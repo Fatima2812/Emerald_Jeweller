@@ -1,0 +1,51 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<div class="cart p-3 mb-2 bg-dark text-white">
+    <div class="container">
+        <div class="row p-3 mb-2 bg-dark text-white">
+            <div class="col-sm-9 mt-5 p-3 mb-2 bg-dark text-white">
+                <h1 style="color: white;  font-style: italic; font-family: French Script MT; " class="text-center">My Cart</h1>
+                {% if cart_items %}
+                <div class="table-responsive p-3 mb-2 bg-dark text-white">
+                    <table class="table table-light p-3 mb-2 bg-dark text-white">
+                        <thead>
+                        <tr>
+                            <th style="color: white; font-weight: bold; font-style: italic; font-family: sans-serif; " scope="col">Name</th>
+                            <th style="color: white; font-weight: bold; font-style: italic; font-family: sans-serif; " scope="col">Discount</th>
+                            <th style="color: white; font-weight: bold; font-style: italic; font-family: sans-serif; " scope="col">Price</th>
+                            <th style="color: white; font-weight: bold; font-style: italic; font-family: sans-serif; " scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart in cart_items %}
+                        <tr>
+                            <td style="color: white; font-style: italic; font-family: sans-serif; ">{{ cart.item.title }} <span class="badge badge-pill badge-light">{{ cart.item.labels }}</span></td>
+                            <td style="color: white; font-style: italic; font-family: sans-serif; ">{{ cart.item.Discount }}</td>
+                            <td style="color: white; font-style: italic; font-family: sans-serif; ">{{ cart.item.price }}</td>
+                            <td><a style="color: white; font-style: italic; font-family: sans-serif; " class="btn btn-outline-light" href="{% url 'main:remove-from-cart' cart.id %}">Delete</a></td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 style="color: white; font-style: italic; font-family: sans-serif; " class="text-center">Sorry, your cart is empty..Please add items!!!</h4>
+                {% endif %}
+            </div>
+            <br>
+            <div class="p-3 mb-2 bg-dark text-white">
+                <div class="content-section p-3 mb-2 bg-dark text-white">
+                    <h1 style="color: white; font-style: italic; font-family: French Script MT; " class="text-center">Order Summary</h1>
+                      <ul class="container">
+                        <li style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="list-group-item text-center text-light bg-dark">Total: Rs. {{ total }}</li>
+                        <li style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="list-group-item text-center text-light bg-dark"><a class="btn btn-outline-light text-light" href="cod/">Cash On Delivery</a></li>
+                        <li style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="list-group-item text-center text-light bg-dark"><a class="btn btn-outline-light text-light" href="op/">Online Payment</a></li>
+                        <!--<li style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="list-group-item text-center text-light bg-dark"><a class="btn btn-outline-info text-light" href="{% url 'main:ordered' %}">Proceed To Checkout</a></li>-->
+                        <li style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="list-group-item text-center text-light bg-dark"><a class="btn btn-outline-light text-light" href="/">Continue Buying</a></li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

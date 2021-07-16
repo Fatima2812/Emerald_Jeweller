@@ -1,0 +1,291 @@
+{% load get_group %}
+{% load static %}
+<!DOCTYPE html>
+<html class="p-3 mb-2 bg-dark text-white" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
+    <title>Jewellery Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+.dark-wrapper {
+    background:#292b2c;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+}
+.dark-wrapper .ss-style-top::before {
+    background-image:linear-gradient(315deg,#292b2c 50%,transparent 50%),linear-gradient(45deg,#292b2c 50%,transparent 50%);
+}
+.social-bar {
+    width:100%;
+    text-align:right;
+}
+.social-bar a {
+    display:inline-block;
+    margin-right:11px;
+    font-size:2.15em;
+    text-decoration:none;
+    color:#fff;
+    opacity:1;
+    filter:alpha(opacity=100);
+    -webkit-transition:opacity 350ms ease;
+    -moz-transition:opacity 350ms ease;
+    -o-transition:opacity 350ms ease;
+    transition:opacity 350ms ease;
+}
+.social-bar a:hover {
+    opacity:0.5;
+    filter: alpha(opacity=50);
+}
+
+.themeBy{
+    color: #292b2c;
+    background: white;
+}
+
+
+/* Popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+        <a style="color: white; font-style: italic; font-family: French Script MT; " class="navbar-brand" href="/"><h1>Emerald Jeweller &nbsp</h1></a>
+        <a style="color: white; font-size: larger; font-style: italic; font-family: French Script MT; " class="mr-2 text-light"><h2>User Name: {{request.user}} </h2> </a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                   
+            </ul>
+        </div>
+    </nav>
+    <main role="main">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $('.carousel').carousel();
+    </script>
+{% block content %}
+<div class=" py-5 bg-dark text-light">
+  <!-- For demo purpose -->
+  <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center">
+          <h1 class="display-6">Please fill the information</h1>
+      </div>
+  </div> <!-- End -->
+  <div class="row">
+      <div class="col-lg-6 mx-auto">
+          <div class="bg-dark">
+              <div class="bg-dark">
+                  <div class="bg-dark shadow-sm pt-4 pl-2 pr-2 pb-2">
+                      <!-- Credit card form tabs -->
+                      <ul role="tablist" class="nav bg-dark nav-pills rounded nav-fill mb-3">
+                          <li class="nav-item"> <a data-toggle="pill" href="#credit-card" style="font-weight: bold; font-style: italic; font-family: sans-serif;" class="nav-link active btn btn-outline-light"> <i class=" mr-2"></i> Credit Card </a> </li>
+                          <li class="nav-item"> <a data-toggle="pill" href="#paypal" style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="nav-link btn btn-outline-light"> <i class=" mr-2"></i> Paypal </a> </li>
+                          <li class="nav-item"> <a data-toggle="pill" href="#net-banking" style="font-weight: bold; font-style: italic; font-family: sans-serif; " class="nav-link btn btn-outline-light"> <i class=" mr-2"></i> Net Banking </a> </li>
+                      </ul>
+                  </div> <!-- End -->
+                  <!-- Credit card form content -->
+                  <div class="tab-content">
+                      <!-- credit card info-->
+                      <div id="credit-card" class="tab-pane fade show active pt-3">
+                          <form role="form" onsubmit="event.preventDefault()">
+                              <div class="form-group"> <label for="username">
+                                      <h6 style="font-weight: bold; font-style: italic; font-family: sans-serif; ">Card Owner</h6>
+                                  </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div>
+                              <div class="form-group"> <label for="cardNumber">
+                                      <h6 style="font-weight: bold; font-style: italic; font-family: sans-serif; ">Card number</h6>
+                                  </label>
+                                  <div class="input-group"> <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                                      <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-8">
+                                      <div class="form-group"> <label><span class="hidden-xs">
+                                                  <h6 style="font-weight: bold; font-style: italic; font-family: sans-serif; ">Expiration Date</h6>
+                                              </span></label>
+                                          <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-4">
+                                      <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                              <h6 style="font-weight: bold; font-style: italic; font-family: sans-serif; ">CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                          </label> <input type="text" required class="form-control"> </div>
+                                  </div>
+                              </div>
+                              <div class="card-footer"> 
+                                  <!--<button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>-->
+                              </label>
+                              <a style="font-weight: bold; font-style: italic; font-family: sans-serif;" class="btn btn-outline-light popup float-right" onclick="myFunction()">Confirm Payment
+                        <span class="popuptext" id="myPopup">Invalid Input !!!</span>
+                      </a>
+                          <a style="font-weight: bold; font-style: italic; font-family: sans-serif;" class="btn btn-outline-light float-left" href="/">Back </a> 
+                          </form>
+                      </div>
+                  </div> <!-- End -->
+                  <!-- Paypal info -->
+                  <div id="paypal" class="tab-pane fade pt-3">
+                      <h6 class="pb-2" style="font-weight: bold; font-style: italic; font-family: sans-serif;">Select your paypal account type</h6>
+                      <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5">International </label></div>
+                      <p> <button type="button" style="font-weight: bold; font-style: italic; font-family: sans-serif;" class="btn btn-outline-light "><i class=" mr-2"></i> Log into my Paypal</button> </p>
+                      <p class="text-muted" style="font-style: italic; font-family: sans-serif;"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                  </div> <!-- End -->
+                  <!-- bank transfer info -->
+                  <div id="net-banking" class="tab-pane fade pt-3">
+                      <div class="form-group "> <label for="Select Your Bank">
+                              <h6 style="font-weight: bold; font-style: italic; font-family: sans-serif;">Select your Bank</h6>
+                          </label> <select class="form-control" id="ccmonth">
+                              <option value="" selected disabled>--Please select your Bank--</option>
+                              <option>HBL</option>
+                              <option>Bank Al-Falah</option>
+                              <option>UBL</option>
+                              <option>MCB</option>
+                              <option>Punjab Bank</option>
+                              <option>Summit Bank</option>
+                              <option>Sonahri Bank</option>
+                              <option>Faisal Bank</option>
+                              <option>National Bank</option>
+                              <option>Bank Islami</option>
+                          </select> </div>
+                      <div class="form-group">
+                          <p> <button type="button" style="font-weight: bold; font-style: italic; font-family: sans-serif;" class="btn btn-outline-light "><i class=" mr-2"></i> Proceed Payment</button> </p>
+                      </div>
+                      <p class="text-muted" style=" font-style: italic; font-family: sans-serif;">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                  </div> <!-- End -->
+                  <!-- End -->
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+          
+    
+ <br>
+  <br>
+  <br>
+{% endblock content %}
+<footer id="footer" class="container dark-wrapper bg-dark text-light">
+    <section class="buttom-footer py-lg-4 py-md-3 py-sm-3 py-3">
+        <div class="container pt-lg-5 pt-md-5 pt-sm-4 pt-4">
+           <div class="state-us mb-lg-5 mb-md-4 mb-3">
+            <h1 style="color: white; font-style: italic; font-family: French Script MT; " class="text-center text-light mb-3">About Us</h1>
+            <h5 class="text-center" style=" font-style: italic; font-family: sans-serif;">The entire collection from party to bridal is contour to impressive look and fits, 100% genuine & bespoke jewellery make your occasions special.</h5>
+            
+    <section class="ss-style-top"></section>
+    <div class="container inner">
+        <div class="row">
+            <div class="col-sm-6">
+                <br>
+                <br>
+                <h1 style="color: white; font-style: italic; font-family: French Script MT; " class=" text-light mb-3">Emerald Jeweller</h1>
+                <h6 style=" font-style: italic; font-family: sans-serif;">Copyright &copy; 2019 All Rights Reserved</h6>
+            </div>
+            <div class="col-sm-5">
+                <div class="social-bar">
+                    <br>
+                    <br>
+                    <br>
+                    <a href="https://www.instagram.com/" class="fa fa-instagram tooltipped" title=""> </a>
+                    <a href="https://www.youtube.com/" class="fa fa-youtube-square tooltipped" title=""></a>
+                    <a href="https://www.facebook.com/" class="fa fa-facebook-square tooltipped" title=""></a>
+                    <a href="https://www.pinterest.com/" class="fa fa-pinterest-square tooltipped" title=""></a>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+        </div>
+    </section>
+</footer>
+
+    <script>
+// When the user clicks on <div>, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+
+<script>
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
